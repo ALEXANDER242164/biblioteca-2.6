@@ -1,34 +1,39 @@
 package biblioteca;
 
 // EXTRACT CLASS
-
+// REFACTOR: Clase Telefono
+/** notamos que la clase socio tenia dos atributos que correspondian a telefono,
+ * por lo que decidimos extraerlos a una nueva clase llamada Telefono, 
+ * y asi poder tener una mejor organizacion del codigo
+**/
 
 // MOVE FIELD
+/**
+ * tambien se movio el atributo diasPlazoPrestamo a la clase Socio,
+ * ya que este atributo es mas relevante para
+ * la clase Socio que para la clase Prestamo.
+ */
 public class Socio {
+
     private String nombre;
     private String ciudad;
-    private String telefonoCodigoArea;
-    private String telefonoNumero;
-    private int diasPlazoPrestamo;
+    private Telefono telefono;
 
-    public Socio(String nombre, String ciudad, String telefonoCodigoArea,
-                 String telefonoNumero, int diasPlazoPrestamo) {
+    public Socio(String nombre, String ciudad, Telefono telefono) {
         this.nombre = nombre;
         this.ciudad = ciudad;
-        this.telefonoCodigoArea = telefonoCodigoArea;
-        this.telefonoNumero = telefonoNumero;
-        this.diasPlazoPrestamo = diasPlazoPrestamo;
+        this.telefono = telefono;
     }
 
-    public String getNombre() { return nombre; }
-    public String getCiudad() { return ciudad; }
-    public int getDiasPlazoPrestamo() { return diasPlazoPrestamo; }
-
-    public String obtenerTelefonoCompleto() {
-        return "(" + telefonoCodigoArea + ") " + telefonoNumero;
+    public String getNombre() {
+        return nombre;
     }
 
-    public boolean esTelefonoLocal() {
-        return telefonoCodigoArea.equals("999");
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public Telefono getTelefono() {
+        return telefono;
     }
 }

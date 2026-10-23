@@ -9,27 +9,36 @@ public class Prestamo {
     private Socio socio;
     private Date fechaPrestamo;
     private Date fechaDevolucion;
+    // MOVE FIELD
+    // atributo que de movio de la clase Socio
+    private int diasPlazoPrestamo;
 
-    public Prestamo(Libro libro, Socio socio, Date fechaPrestamo, Date fechaDevolucion) {
+    public Prestamo(Libro libro, Socio socio, Date fechaPrestamo, Date fechaDevolucion, int diasPlazoPrestamo) {
         this.libro = libro;
         this.socio = socio;
         this.fechaPrestamo = fechaPrestamo;
         this.fechaDevolucion = fechaDevolucion;
+        this.diasPlazoPrestamo = diasPlazoPrestamo;
     }
 
-    public Libro getLibro() { return libro; }
-    public Socio getSocio() { return socio; }
+    public Libro getLibro() {
+        return libro;
+    }
+
+    public Socio getSocio() {
+        return socio;
+    }
 
     // INTRODUCE FOREIGN METHOD
     public Date calcularFechaVencimiento() {
-        return new Date(fechaPrestamo.getTime() + socio.getDiasPlazoPrestamo() * 24L * 60 * 60 * 1000);
+        // aqui se cambio socio.getDiasPlazoPrestamo(), directo por el diasPlazoPrestamo
+        return new Date(fechaPrestamo.getTime() + diasPlazoPrestamo * 24L * 60 * 60 * 1000);
     }
 
     public int calcularDiasRetraso() {
         return diasEntre(calcularFechaVencimiento(), fechaDevolucion);
     }
 
-    // MOVE METHOD
     public double calcularMulta(int diasRetraso) {
         if (diasRetraso <= 0) {
             return 0;
@@ -43,6 +52,14 @@ public class Prestamo {
         }
         return multa;
     }
+
+    // MOVE METHOD
+    /**
+     * REFACTOR: metodo calcular multa
+     * se movio el metodo calcular multa de la clase Libro a la clase Libro,
+     * ya que este metodo es mas relevante para la clase Prestamo que para la clase
+     * Libro.
+     */
 
     // INTRODUCE LOCAL EXTENSION
     private int diasEntre(Date desde, Date hasta) {
