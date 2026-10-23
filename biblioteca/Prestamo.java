@@ -53,15 +53,23 @@ public class Prestamo {
         return multa;
     }
 
-    // MOVE METHOD
+    // Metodo: formatearFecha
+    // Refactor: Introduce Local Extension
     /**
-     * REFACTOR: metodo calcular multa
-     * se movio el metodo calcular multa de la clase Libro a la clase Libro,
-     * ya que este metodo es mas relevante para la clase Prestamo que para la clase
-     * Libro.
+     * Convierte una fecha a texto para mostrarla
      */
 
-    // INTRODUCE LOCAL EXTENSION
+    // Metodo: esFinDeSemana
+    // Refactor: Introduce Local Extension
+    /**
+     * Verifica si una fecha cae en sabado o domingo
+     */
+
+    // Metodo: diasEntre
+    // Refactor: Introduce Local Extension
+    /**
+     * Calcula los dias entre dos fechas
+     */
     private int diasEntre(Date desde, Date hasta) {
         double milisPorDia = 24.0 * 60 * 60 * 1000;
         return (int) Math.round((hasta.getTime() - desde.getTime()) / milisPorDia);
@@ -74,16 +82,23 @@ public class Prestamo {
     private boolean esFinDeSemana(Date fecha) {
         Calendar calendario = Calendar.getInstance();
         calendario.setTime(fecha);
+
         int dia = calendario.get(Calendar.DAY_OF_WEEK);
-        return dia == Calendar.SATURDAY || dia == Calendar.SUNDAY;
+
+        return dia == Calendar.SATURDAY ||
+                dia == Calendar.SUNDAY;
     }
 
     public void imprimirResumen() {
         System.out.println("Libro: " + libro.getTitulo());
         System.out.println("Socio: " + socio.getNombre());
         System.out.println("Prestado: " + formatearFecha(fechaPrestamo));
-        System.out.println("Vence: " + formatearFecha(calcularFechaVencimiento()));
-        System.out.println("Vence en fin de semana: " + esFinDeSemana(calcularFechaVencimiento()));
+
+        Date fechaVencimiento = calcularFechaVencimiento();
+
+        System.out.println("Vence: " + formatearFecha(fechaVencimiento));
+        System.out.println("Vence en fin de semana: " + esFinDeSemana(fechaVencimiento));
         System.out.println("Devuelto: " + formatearFecha(fechaDevolucion));
     }
+
 }
