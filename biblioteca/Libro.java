@@ -1,13 +1,9 @@
-package biblioteca;
+package Biblioteca;
 
 public class Libro {
     private String titulo;
     private String autor;
-    private String isbn; // Se uso inline para simplificar el código y evitar la creación de una clase
-                         // ISBN separada
-    // Refactor: Se eliminar la clase isnb ya que usando la tecnica inline el cual
-    // no cumple un gran papel es decir no nos cambiene tener una clase sola para
-    // eso.
+    private Isbn isbn;
     private String categoria; // "NOVEDAD" o "NORMAL"
     private double multaPorDia;
     private double valorReposicion;
@@ -16,7 +12,7 @@ public class Libro {
             double multaPorDia, double valorReposicion) {
         this.titulo = titulo;
         this.autor = autor;
-        this.isbn = isbn;
+        this.isbn = new Isbn(isbn);
         this.categoria = categoria;
         this.multaPorDia = multaPorDia;
         this.valorReposicion = valorReposicion;
@@ -31,7 +27,7 @@ public class Libro {
     }
 
     public String getIsbn() {
-        return isbn;
+        return isbn.getValor();
     }
 
     public String getCategoria() {
