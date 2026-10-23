@@ -9,27 +9,36 @@ public class Prestamo {
     private Socio socio;
     private Date fechaPrestamo;
     private Date fechaDevolucion;
+    // MOVE FIELD
+    // atributo que de movio de la clase Socio
+    private int diasPlazoPrestamo;
 
-    public Prestamo(Libro libro, Socio socio, Date fechaPrestamo, Date fechaDevolucion) {
+    public Prestamo(Libro libro, Socio socio, Date fechaPrestamo, Date fechaDevolucion, int diasPlazoPrestamo) {
         this.libro = libro;
         this.socio = socio;
         this.fechaPrestamo = fechaPrestamo;
         this.fechaDevolucion = fechaDevolucion;
+        this.diasPlazoPrestamo = diasPlazoPrestamo;
     }
 
-    public Libro getLibro() { return libro; }
-    public Socio getSocio() { return socio; }
+    public Libro getLibro() {
+        return libro;
+    }
+
+    public Socio getSocio() {
+        return socio;
+    }
 
     // INTRODUCE FOREIGN METHOD
     public Date calcularFechaVencimiento() {
-        return new Date(fechaPrestamo.getTime() + socio.getDiasPlazoPrestamo() * 24L * 60 * 60 * 1000);
+        // aqui se cambio socio.getDiasPlazoPrestamo(), directo por el diasPlazoPrestamo
+        return new Date(fechaPrestamo.getTime() + diasPlazoPrestamo * 24L * 60 * 60 * 1000);
     }
 
     public int calcularDiasRetraso() {
         return diasEntre(calcularFechaVencimiento(), fechaDevolucion);
     }
 
-    // MOVE METHOD
     public double calcularMulta(int diasRetraso) {
         if (diasRetraso <= 0) {
             return 0;
@@ -44,7 +53,23 @@ public class Prestamo {
         return multa;
     }
 
-    // INTRODUCE LOCAL EXTENSION
+    // Metodo: formatearFecha
+    // Refactor: Introduce Local Extension
+    /**
+     * Convierte una fecha a texto para mostrarla
+     */
+
+    // Metodo: esFinDeSemana
+    // Refactor: Introduce Local Extension
+    /**
+     * Verifica si una fecha cae en sabado o domingo
+     */
+
+    // Metodo: diasEntre
+    // Refactor: Introduce Local Extension
+    /**
+     * Calcula los dias entre dos fechas
+     */
     private int diasEntre(Date desde, Date hasta) {
         double milisPorDia = 24.0 * 60 * 60 * 1000;
         return (int) Math.round((hasta.getTime() - desde.getTime()) / milisPorDia);
@@ -57,16 +82,23 @@ public class Prestamo {
     private boolean esFinDeSemana(Date fecha) {
         Calendar calendario = Calendar.getInstance();
         calendario.setTime(fecha);
+
         int dia = calendario.get(Calendar.DAY_OF_WEEK);
-        return dia == Calendar.SATURDAY || dia == Calendar.SUNDAY;
+
+        return dia == Calendar.SATURDAY ||
+                dia == Calendar.SUNDAY;
     }
 
     public void imprimirResumen() {
         System.out.println("Libro: " + libro.getTitulo());
         System.out.println("Socio: " + socio.getNombre());
         System.out.println("Prestado: " + formatearFecha(fechaPrestamo));
-        System.out.println("Vence: " + formatearFecha(calcularFechaVencimiento()));
-        System.out.println("Vence en fin de semana: " + esFinDeSemana(calcularFechaVencimiento()));
+
+        Date fechaVencimiento = calcularFechaVencimiento();
+
+        System.out.println("Vence: " + formatearFecha(fechaVencimiento));
+        System.out.println("Vence en fin de semana: " + esFinDeSemana(fechaVencimiento));
         System.out.println("Devuelto: " + formatearFecha(fechaDevolucion));
     }
+
 }

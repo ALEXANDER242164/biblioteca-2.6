@@ -3,7 +3,11 @@ package biblioteca;
 public class Libro {
     private String titulo;
     private String autor;
-    private String isbn;
+    private String isbn; // Se uso inline para simplificar el código y evitar la creación de una clase
+                         // ISBN separada
+    // Refactor: Se eliminar la clase isnb ya que usando la tecnica inline el cual
+    // no cumple un gran papel es decir no nos cambiene tener una clase sola para
+    // eso.
     private String categoria; // "NOVEDAD" o "NORMAL"
     private double multaPorDia;
     private double valorReposicion;
